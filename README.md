@@ -62,17 +62,17 @@ Supports conversion between:
 
 ## 📂 Project Structure
 scientific-math-engine/<br/>
-│── .gitignore<br/>
 │── assets/<br/>
-│ ├── screenshot.png<br/>
-│ ├── scientific.png<br/>
-│ ├── number.png<br/>
 │ ├── expression.png<br/>
+│ ├── number.png<br/>
+│ ├── scientific.png<br/>
+│ ├── screenshot.png<br/>
 │ └── stats.png<br/>
+│── .gitignore<br/>
+│── README.md<br/>
 │── index.html<br/>
-│── style.css<br/>
 │── script.js<br/>
-└── README.md<br/>
+└── style.css<br/>
 
 
 ---
@@ -90,8 +90,6 @@ scientific-math-engine/<br/>
 ---
 
 ## 📸 Screenshots
-
-> Add your screenshots in the `assets` folder
 
 ### Main Interface
 ![Main UI](assets/screenshot.png)
@@ -128,11 +126,11 @@ scientific-math-engine/<br/>
 - User-friendly UI design
 
 ---
-
 ## 👨‍💻 Author
 
-Your Name  
-https://github.com/your-username
+PANCHAJANYA RAY<br/>
+MCA Student | Web Developer<br/>
+https://github.com/panchajanya-ray
 
 ---
 
