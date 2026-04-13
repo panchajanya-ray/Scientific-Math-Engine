@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Multi-mode Scientific Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  
+  <div class="app">
+    
+    <div class="calculator">
+      <h2>Scientific Math Engine</h2>
+      
+      <div class="mode-bar">
+        <button id="mScientific" class="mode-btn" onclick="setMode('scientific')">Scientific</button>
+        <button id="mNumber" class="mode-btn" onclick="setMode('number')">Number System</button>
+        <button id="mExpression" class="mode-btn" onclick="setMode('expression')">Expression</button>
+        <button id="mStats" class="mode-btn" onclick="setMode('stats')">Statistics</button>
+      </div>
+
+      
+      <section id="mode-scientific" class="mode active">
+        <input id="display" type="text" inputmode="decimal" placeholder="0" />
+
+        <div class="sci-rows">
+          <div class="sci-row">
+            <button onclick="sciUnary('reciprocal')">1/x</button>
+            <button onclick="toggleDegRad()" id="degRadBtn">Deg</button>
+            <button onclick="sciUnary('sqrt')">√</button>
+            <button onclick="sciUnary('abs')">|x|</button>
+          </div>
+          <div class="sci-row">
+            <button onclick="sciUnary('sin')">sin</button>
+            <button onclick="sciUnary('cos')">cos</button>
+            <button onclick="sciUnary('tan')">tan</button>
+            <button onclick="insertConst('pi')">π</button>
+          </div>
+          <div class="sci-row">
+            <button onclick="sciUnary('ln')">ln</button>
+            <button onclick="sciUnary('log')">log</button>
+            <button onclick="sciUnary('exp')">eˣ</button>
+            <button onclick="insertConst('e')">e</button>
+          </div>
+          <div class="sci-row">
+            <button onclick="sciUnary('square')">x²</button>
+            <button onclick="insert('^')">xʸ</button>
+            <button onclick="sciUnary('neg')">+/-</button>
+            <button onclick="sciUnary('percent')">%</button>
+          </div>
+        </div>
+
+        <div class="pad">
+          <div class="row">
+            <button class="key" onclick="clearAll()">C</button>
+            <button class="key" onclick="del()">DEL</button>
+            <button class="key" onclick="insert('(')">(</button>
+            <button class="key" onclick="insert(')')">)</button>
+            <button class="key op" onclick="insert('/')">÷</button>
+          </div>
+          <div class="row">
+            <button class="key" onclick="insert('7')">7</button>
+            <button class="key" onclick="insert('8')">8</button>
+            <button class="key" onclick="insert('9')">9</button>
+            <button class="key op" onclick="insert('*')">×</button>
+          </div>
+          <div class="row">
+            <button class="key" onclick="insert('4')">4</button>
+            <button class="key" onclick="insert('5')">5</button>
+            <button class="key" onclick="insert('6')">6</button>
+            <button class="key op" onclick="insert('-')">−</button>
+          </div>
+          <div class="row">
+            <button class="key" onclick="insert('1')">1</button>
+            <button class="key" onclick="insert('2')">2</button>
+            <button class="key" onclick="insert('3')">3</button>
+            <button class="key op" onclick="insert('+')">+</button>
+          </div>
+          <div class="row">
+            <button class="key wide" onclick="insert('0')">0</button>
+            <button class="key" onclick="insert('.')">.</button>
+            <button class="key equals" onclick="calculate()">=</button>
+          </div>
+        </div>
+      </section>
+
+    
+      <section id="mode-number" class="mode">
+        <div class="num-row">
+          <div class="select-wrap">
+            <label>From</label>
+            <select id="fromBase" onchange="toggleCustomBase('from')">
+              <option value="10">Decimal</option>
+              <option value="2">Binary</option>
+              <option value="8">Octal</option>
+              <option value="16">Hexadecimal</option>
+              <option value="other">Other…</option>
+            </select>
+            <input 
+              id="fromCustomBase" 
+              type="number" 
+              min="2" max="32" 
+              placeholder="Enter base (2–32)" 
+              style="display:none; margin-top:6px;"
+            />
+          </div>
+
+          <div class="select-wrap">
+            <label>To</label>
+            <select id="toBase" onchange="toggleCustomBase('to')">
+              <option value="2">Binary</option>
+              <option value="8">Octal</option>
+              <option value="10">Decimal</option>
+              <option value="16">Hexadecimal</option>
+              <option value="other">Other…</option>
+            </select>
+            <input 
+              id="toCustomBase" 
+              type="number" 
+              min="2" max="32" 
+              placeholder="Enter base (2–32)" 
+              style="display:none; margin-top:6px;"
+            />
+          </div>
+        </div>
+
+        <div class="panel-row">
+          <input id="numInput" placeholder="Enter number (in From base)" />
+          <div class="num-actions">
+            <button onclick="convertNumber()">Convert</button>
+            <button onclick="swapBases()">↔</button>
+          </div>
+          <div id="numResult" class="resultBox">Result: —</div>
+        </div>
+      </section>
+
+      
+      <section id="mode-expression" class="mode">
+        <div class="expr-row">
+          <div class="select-wrap">
+            <label>From</label>
+            <select id="exprFrom">
+              <option value="infix">Infix</option>
+              <option value="postfix">Postfix</option>
+              <option value="prefix">Prefix</option>
+            </select>
+          </div>
+          <div class="select-wrap">
+            <label>To</label>
+            <select id="exprTo">
+              <option value="postfix">Postfix</option>
+              <option value="infix">Infix</option>
+              <option value="prefix">Prefix</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="panel-row">
+          <input id="exprInput" placeholder="Enter expression (use spaces for postfix/prefix multi-token if needed)" />
+          <div class="num-actions">
+            <button onclick="convertExpression()">Convert</button>
+            <button onclick="document.getElementById('exprInput').value=''">Clear</button>
+          </div>
+          <div id="exprResult" class="resultBox">Result: —</div>
+        </div>
+      </section>
+
+      
+      <section id="mode-stats" class="mode">
+        <div class="panel-row">
+          <label>Values (comma-separated)</label>
+          <input id="statValues" placeholder="e.g. 10,20,30" />
+          <label>Frequencies (optional)</label>
+          <input id="statFreq" placeholder="e.g. 2,3,5" />
+          <div class="side-by-side">
+            <select id="statAction">
+              <option value="">Choose stat...</option>
+              <option value="mean">Mean</option>
+              <option value="median">Median</option>
+              <option value="mode">Mode</option>
+              <option value="variance">Variance</option>
+              <option value="stdDev">Std. Deviation</option>
+            </select>
+            <button onclick="computeStat()">Calculate</button>
+          </div>
+          <div id="statOutput" class="resultBox">Result: —</div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
