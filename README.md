@@ -80,7 +80,7 @@ scientific-math-engine/<br/>
 ## ▶️ How to Run
 
 1. Clone the repository:
-   git clone https://github.com/your-username/scientific-math-engine.git
+   git clone https://github.com/panchajanya-ray/scientific-math-engine.git
 
 2. Open the project folder
 
